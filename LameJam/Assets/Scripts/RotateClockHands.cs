@@ -12,6 +12,12 @@ public class RotateClockHands : MonoBehaviour
     private float totalRotation;
     private bool isPaused;
 
+    private void Start()
+    {
+        startRotation = transform.rotation;
+        otherHandStartRotation = otherHand.transform.rotation;
+    }
+
     private void Update()
     {
         if (!isPaused)
@@ -20,11 +26,11 @@ public class RotateClockHands : MonoBehaviour
 
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
-                rotationInput = -1;
+                rotationInput = 1;
             }
             else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.RightArrow))
             {
-                rotationInput = 1;
+                rotationInput = -1;
             }
 
             if (rotationInput != 0)
@@ -32,11 +38,9 @@ public class RotateClockHands : MonoBehaviour
                 float angleDifference = maxSpeed * Time.deltaTime * rotationInput;
                 totalRotation += angleDifference;
 
-                transform.rotation = Quaternion.Euler(0, 0, angleDifference) * transform.rotation;
+                transform.rotation = Quaternion.Euler(0, 0, startRotation.eulerAngles.z + totalRotation);
                 UpdateOtherHandRotation(totalRotation);
             }
-
-            startRotation = transform.rotation;
         }
     }
 
