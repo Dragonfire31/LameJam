@@ -16,34 +16,43 @@ public class CreateNewEnemy : ScriptableObject
     private int timeChange; // time tracker for object after spawning to figure out what stage/ index of the array it is in
     GameObject enemy; // enemy object
     private int currentStage; //current stage of the enemy
+    private int startingValue;
 
     public void SpawnEnemy(Vector2 position)
     {
-
         // Choose a random stage
-        int stage = Random.Range(0, pointValues.Length);
-        currentStage = stage;
-        
-        //set our time to a starting value from random stage using timeValues
-        timeChange = timeValues[currentStage];
+        float age = Random.Range(timeValues[0], timeValues[timeValues.Length - 1]);
 
+        int currentStage = 0;
+        for (int i = 0; i < timeValues.Length - 1; i++)
+        {
+            if (age > timeValues[i] && age <= timeValues[i + 1])
+            {
+                currentStage = i + 1;
+                break;
+            }
+        }
 
         // Instantiate enemy with chosen sprite
         enemy = enemyGameObject;
         enemy.transform.position = position;
-        //enemy.AddComponent<SpriteRenderer>().sprite = sprites[currentStage];
         enemy.GetComponent<SpriteRenderer>().sprite = sprites[currentStage];
-
+        startingValue = pointValues[currentStage];
 
         // Set rigidbody properties
         Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
         rb.gravityScale = gravityScale;
         rb.mass = mass;
 
-        //
-        Instantiate(enemy);
-        Debug.Log(enemyName+" Created");
+        // Instantiate the enemy object
+        GameObject instantiatedEnemy = Instantiate(enemy);
 
+        Debug.Log("Value: " + startingValue);
+        // Call SetValues on the instantiated enemy object
+        instantiatedEnemy.GetComponent<EnemyBehavior>().SetValues(enemyName, pointValues, timeValues, sprites, gravityScale, mass, noReturnBounderies, age, startingValue);
+
+        // Set the layer mask to layer 7
+        instantiatedEnemy.layer = 7;
     }
 
 

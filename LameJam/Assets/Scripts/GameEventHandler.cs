@@ -38,6 +38,7 @@ public class GameEventHandler : MonoBehaviour
 
     // Game state
     private bool gameStarted = false;
+    private int totalScore = 0;
 
 
     private void Start() // Start is called before the first frame update
@@ -122,7 +123,6 @@ public class GameEventHandler : MonoBehaviour
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
     #endregion
-
     
     private void StartGame()
     {
@@ -139,6 +139,11 @@ public class GameEventHandler : MonoBehaviour
         gameStarted = false;
     }
 
+    public void AddScore(int score)
+    {
+        totalScore += score;
+        Debug.Log("Score: " + totalScore);
+    }
 
     private void SpawnEnemy()
     {

@@ -16,23 +16,33 @@ public class EnemyBehavior : MonoBehaviour
     private float gravityScale; // gravity scale for specific enemy, may be heavier for larger objects and lighter for smaller objects
     private float mass; // mass for specific enemy, may be heavier for larger objects and lighter for smaller objects
     private int noReturnBounderies; //time change to be added and subtracted from the top and bottom of the array, to low object will disapear from time, to large object turn into goop enemy
+    private float age; // age of the enemy
+    private int currentValue;
+    private bool valuesSet = false;
+    private GameObject gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
-       
+       gameManager = GameObject.Find("GameManager");
+       if(gameManager == null)
+       {
+           Debug.LogWarning("Game Manager not found");
+       }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.y < -10)
+        if (this.transform.position.y < -10)
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
+
+
     }
 
-    public void SetValues(string enemyName, int[] pointValues, int[] timeValues, Sprite[] sprites, float gravityScale, float mass, int noReturnBounderies)
+    public void SetValues(string enemyName, int[] pointValues, int[] timeValues, Sprite[] sprites, float gravityScale, float mass, int noReturnBounderies, float age, int currentValue)
     {
         this.enemyName = enemyName;
         this.pointValues = pointValues;
@@ -41,49 +51,33 @@ public class EnemyBehavior : MonoBehaviour
         this.gravityScale = gravityScale;
         this.mass = mass;
         this.noReturnBounderies = noReturnBounderies;
-    }
+        this.age = age;
+        this.currentValue = currentValue;
+        valuesSet = true;
+        Debug.Log("Current Value: " + currentValue);
+        }
 
-    public void UpdateTime(float time)
+    public void scoreEnemy()
     {
-        timeChange = timeChange + (int)time; //update our time
-        int curStage = 0; //set our current stage to 0
-
-
-        // Check if the time is above or below the boundaries
-        if (timeChange < timeValues[0] - noReturnBounderies)
+        if (!valuesSet)
         {
-            isBelowBoundary = true;
-            destroyEnemy();
-            return;
-        }
-        else if (timeChange > timeValues[timeValues.Length - 1] + noReturnBounderies)
-        {
-            isAboveBoundary = true;
-            destroyEnemy();
+            Debug.LogWarning("Values not set yet");
             return;
         }
 
-        // Find the stage that corresponds to the current time
-        for (int i = 0; i < timeValues.Length; i++)
+        //Check if gameOject exists
+        if (this.gameObject != null)
         {
-            curStage = i; //set our current stage to i incase we are greater then our final index so that way we set our stage to the final index, if we are less then a value we will hit the break and exit the loop
-            if (timeChange <= timeValues[i])
-            {
-                break;
-            }
+            Debug.Log("Score Value: " + currentValue);
+            gameManager.GetComponent<GameEventHandler>().AddScore(currentValue);
+            Destroy(this.gameObject);
         }
-        //timechange = 105 and timevalues[0,25,50,75,100]  - currentstage = 4
-        // Check if the time falls between two values
-        if (curStage > 0 && timeChange < timeValues[curStage] && timeChange > timeValues[curStage - 1])
+        else
         {
-            curStage--; // set our current stage to the previous index since we are rounding down to a stage that is less then our current time
+            Debug.LogWarning("Enemy does not exist");
         }
 
-        //update our current stage
-        currentStage = curStage;
 
-        // Update the sprite of this enemy
-        this.GetComponent<SpriteRenderer>().sprite = sprites[currentStage];
     }
 
     public void destroyEnemy()
@@ -111,6 +105,6 @@ public class EnemyBehavior : MonoBehaviour
             }
         }
 
-        Destroy(this);
+        Destroy(this.gameObject);
     }
 }

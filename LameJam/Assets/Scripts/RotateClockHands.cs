@@ -6,11 +6,14 @@ public class RotateClockHands : MonoBehaviour
     [SerializeField] private GameObject otherHand;
     [SerializeField] private LayerMask collisionMask;
     [SerializeField] private float maxSpeed = 50f;
+    [SerializeField] private float minSpeed = 10f;
+    [SerializeField] private float acceleration = 5f;
 
     private Quaternion startRotation;
     private Quaternion otherHandStartRotation;
     private float totalRotation;
     private bool isPaused;
+    private float currentSpeed = 0f;
 
     private void Start()
     {
@@ -28,18 +31,23 @@ public class RotateClockHands : MonoBehaviour
             {
                 rotationInput = 1;
             }
-            else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.RightArrow))
+            else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
                 rotationInput = -1;
             }
 
             if (rotationInput != 0)
             {
-                float angleDifference = maxSpeed * Time.deltaTime * rotationInput;
+                currentSpeed = Mathf.Clamp(currentSpeed + acceleration * Time.deltaTime, minSpeed, maxSpeed);
+                float angleDifference = currentSpeed * Time.deltaTime * rotationInput;
                 totalRotation += angleDifference;
 
                 transform.rotation = Quaternion.Euler(0, 0, startRotation.eulerAngles.z + totalRotation);
                 UpdateOtherHandRotation(totalRotation);
+            }
+            else
+            {
+                currentSpeed = minSpeed;
             }
         }
     }
