@@ -39,12 +39,6 @@ public class GameEventHandler : MonoBehaviour
     // Game state
     private bool gameStarted = false;
 
-    // Reference to your camera
-    public Camera mainCamera;
-
-    // List of enemies currently active in the game
-    private List<GameObject> activeEnemies = new List<GameObject>();
-
 
     private void Start() // Start is called before the first frame update
     {
@@ -81,15 +75,6 @@ public class GameEventHandler : MonoBehaviour
         }
         else { Time.timeScale = 0f; }
 
-        // Check if any active enemies are off-screen and remove them from the list
-        for (int i = activeEnemies.Count - 1; i >= 0; i--)
-        {
-            if (!IsVisibleFrom(activeEnemies[i].GetComponent<Renderer>(), mainCamera))
-            {
-                Destroy(activeEnemies[i]);
-                activeEnemies.RemoveAt(i);
-            }
-        }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -97,12 +82,6 @@ public class GameEventHandler : MonoBehaviour
         }
     }
 
-    // Helper method to check if a renderer is visible from a camera
-    bool IsVisibleFrom(Renderer renderer, Camera camera)
-    {
-        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(camera);
-        return GeometryUtility.TestPlanesAABB(planes, renderer.bounds);
-    }
 
     #region PauseMenu
     private void PauseGame()
