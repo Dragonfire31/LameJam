@@ -12,14 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f40512f63e96334bacd15ae719a7175, type: 3}
   m_Name: CowEnemy
   m_EditorClassIdentifier: 
-  pointValues: 0000000000000000000000000000000000000000
-  timeValues: 0000000000000000000000000000000000000000
+  enemyName: 
+  pointValues: 050000000a000000
+  timeValues: 0000000005000000
   sprites:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: -2413806693520163455, guid: 856e1b794ab50744589e4b374dde9cc1, type: 3}
+  - {fileID: 7482667652216324306, guid: 8cea2e47f809e06458b73cb644c9e4ae, type: 3}
   gravityScale: 1
   mass: 0
   noReturnBounderies: 0
