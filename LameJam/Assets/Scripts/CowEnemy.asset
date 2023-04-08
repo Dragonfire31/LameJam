@@ -18,6 +18,6 @@ MonoBehaviour:
   sprites:
   - {fileID: -2413806693520163455, guid: 856e1b794ab50744589e4b374dde9cc1, type: 3}
   - {fileID: 7482667652216324306, guid: 8cea2e47f809e06458b73cb644c9e4ae, type: 3}
-  gravityScale: 1
-  mass: 0
+  gravityScale: 0.5
+  mass: 1
   noReturnBounderies: 0
