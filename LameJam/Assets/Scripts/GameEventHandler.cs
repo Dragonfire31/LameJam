@@ -75,11 +75,13 @@ public class GameEventHandler : MonoBehaviour
         }
         else { Time.timeScale = 0f; }
 
-       if (Input.GetKeyDown(KeyCode.Escape))
+
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             PauseGame();
         }
     }
+
 
     #region PauseMenu
     private void PauseGame()

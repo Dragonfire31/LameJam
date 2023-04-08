@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: CowEnemy
   m_EditorClassIdentifier: 
   enemyName: 
-  pointValues: 050000000a000000
-  timeValues: 0000000005000000
+  pointValues: 050000000a00000005000000
+  timeValues: 00000000050000000a000000
   sprites:
-  - {fileID: -2413806693520163455, guid: 856e1b794ab50744589e4b374dde9cc1, type: 3}
-  - {fileID: 7482667652216324306, guid: 8cea2e47f809e06458b73cb644c9e4ae, type: 3}
+  - {fileID: 21300000, guid: cc5ca7c23101cae4a921fbb2e37e6ce3, type: 3}
+  - {fileID: 21300000, guid: beffa2bece93f2d47bbf607134d6262f, type: 3}
+  - {fileID: 21300000, guid: 4c2ab128f7fa37c4e924171c0c6022b8, type: 3}
   gravityScale: 1
   mass: 5
   noReturnBounderies: 0
