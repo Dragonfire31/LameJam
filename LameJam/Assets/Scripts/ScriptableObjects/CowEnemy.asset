@@ -24,4 +24,4 @@ MonoBehaviour:
   mass: 8
   noReturnBounderies: 30
   enemyGameObject: {fileID: 5097377085773061366, guid: a4ca2461a4a3a7e468d7338dcc485c0c, type: 3}
-  ageChangeSpeed: 100
+  ageChangeSpeed: 10
