@@ -4,6 +4,7 @@ public class RotateClockHands : MonoBehaviour
 {
     [SerializeField] bool isHourHand;
     [SerializeField] GameObject otherHand;
+    private bool isPaused = false;
     private bool isDragging;
     private Vector3 startMousePosition;
     private float startRotation;
@@ -26,10 +27,25 @@ public class RotateClockHands : MonoBehaviour
 
     private void OnMouseDown()
     {
-        isDragging = true;
-        startMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        startMousePosition.z = 0;
-        startRotation = transform.eulerAngles.z;
+        if (!isPaused)
+        {
+            isDragging = true;
+            startMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            startMousePosition.z = 0;
+            startRotation = transform.eulerAngles.z;
+        }
+    }
+
+    public void Pause()
+    {
+        if (!isPaused)
+        {
+            isPaused = true;
+        }
+        else
+        {
+            isPaused = false;
+        }
     }
 
     private void OnMouseUp()
