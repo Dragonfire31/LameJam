@@ -9,6 +9,7 @@ public class CreateNewEnemy : ScriptableObject
     [SerializeField] private int[] pointValues; // points for each array index
     [SerializeField] private int[] timeValues; // time for each array index
     [SerializeField] private Sprite[] sprites; // sprites for each array index
+    [SerializeField] private Sprite gloopSprite; // sprite for gloop enemy
     [SerializeField] private float gravityScale; // gravity scale for specific enemy, may be heavier for larger objects and lighter for smaller objects
     [SerializeField] private float mass; // mass for specific enemy, may be heavier for larger objects and lighter for smaller objects
     [SerializeField] private int noReturnBounderies; //time change to be added and subtracted from the top and bottom of the array, to low object will disapear from time, to large object turn into goop enemy
@@ -51,7 +52,7 @@ public class CreateNewEnemy : ScriptableObject
 
         Debug.Log("Value: " + startingValue);
         // Call SetValues on the instantiated enemy object
-        instantiatedEnemy.GetComponent<EnemyBehavior>().SetValues(enemyName, pointValues, timeValues, sprites, gravityScale, mass, noReturnBounderies, age, startingValue, ageChangeSpeed);
+        instantiatedEnemy.GetComponent<EnemyBehavior>().SetValues(enemyName, pointValues, timeValues, sprites, gravityScale, mass, noReturnBounderies, age, startingValue, ageChangeSpeed, gloopSprite);
 
         // Set the layer mask to layer 7
         instantiatedEnemy.layer = 7;
