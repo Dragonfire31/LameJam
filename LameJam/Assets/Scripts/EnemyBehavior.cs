@@ -21,6 +21,7 @@ public class EnemyBehavior : MonoBehaviour
     private bool valuesSet = false;
     private GameObject gameManager;
     private float ageChangeSpeed;
+    public Sprite gloopSprite; // sprite for gloop enemy
 
     // Start is called before the first frame update
     void Start()
@@ -54,7 +55,7 @@ public class EnemyBehavior : MonoBehaviour
         UpdateCurrentStage();
     }
 
-    public void SetValues(string enemyName, int[] pointValues, int[] timeValues, Sprite[] sprites, float gravityScale, float mass, int noReturnBounderies, float age, int currentValue, float ageChangeSpeed)
+    public void SetValues(string enemyName, int[] pointValues, int[] timeValues, Sprite[] sprites, float gravityScale, float mass, int noReturnBounderies, float age, int currentValue, float ageChangeSpeed, Sprite gloopSprite)
     {
         this.enemyName = enemyName;
         this.pointValues = pointValues;
@@ -66,18 +67,11 @@ public class EnemyBehavior : MonoBehaviour
         this.age = age;
         this.currentValue = currentValue;
         this.ageChangeSpeed = ageChangeSpeed;
-        valuesSet = true;
-        Debug.Log("Current Value: " + currentValue);
-        }
+        this.gloopSprite = gloopSprite;
+    }
 
     public void scoreEnemy()
     {
-        if (!valuesSet)
-        {
-            Debug.LogWarning("Values not set yet");
-            return;
-        }
-
         //Check if gameOject exists
         if (this.gameObject != null)
         {
@@ -93,52 +87,33 @@ public class EnemyBehavior : MonoBehaviour
 
     }
 
-    public void destroyEnemy()
-    {
-        //If enemy is outside the boundary of the scene, destroy it, otherwise, run checks below for spawn goop enemy or smoke puff and add points to game manager
-        if (!isOutsideBoundary)
-        {
-            // Check if the enemy is above or below the boundaries
-            if (isAboveBoundary)
-            {
-                //spawn goop enemy
-                //GameManager.Instance.SpawnGoopEnemy(enemy.transform.position);
-            }
-            else if (isBelowBoundary)
-            {
-                //spawn smoke puff
-                //GameManager.Instance.SpawnSmokePuff(enemy.transform.position);
-            }
-            else if (!isAboveBoundary && !isBelowBoundary)
-            {
-                // add points to GameManager based on pointValues and current stage
-                //send point value of pointValues[currentStage]
-                // send back points to game manager
-                //GameManager.Instance.AddPoints(enemy.GetComponent<EnemyMovement>().PointValue);
-            }
-        }
-
-        Destroy(this.gameObject);
-    }
-
     private void UpdateCurrentStage()
     {
-        if (valuesSet)
+    
+        int highestTimeValue = timeValues[timeValues.Length - 1];
+
+        if (age >= noReturnBounderies)
         {
-            for (int i = 0; i < timeValues.Length; i++)
+            GetComponent<SpriteRenderer>().sprite = gloopSprite;
+            currentValue = -50;
+            return;
+        }
+
+        for (int i = 0; i < timeValues.Length; i++)
+        {
+            if (age >= timeValues[i] && age < (i + 1 < timeValues.Length ? timeValues[i + 1] : float.MaxValue))
             {
-                if (age >= timeValues[i] && age < (i + 1 < timeValues.Length ? timeValues[i + 1] : float.MaxValue))
+                if (currentStage != i)
                 {
-                    if (currentStage != i)
-                    {
-                        currentStage = i;
-                        UpdatePointsAndSprite();
-                    }
-                    break;
+                    currentStage = i;
+                    UpdatePointsAndSprite();
                 }
+                break;
             }
         }
+    
     }
+
 
     private void UpdatePointsAndSprite()
     {
@@ -151,5 +126,38 @@ public class EnemyBehavior : MonoBehaviour
     {
         DestroyImmediate(GetComponent<PolygonCollider2D>());
         this.gameObject.AddComponent<PolygonCollider2D>();
+    }
+
+    public void getGlooped()
+    {
+        // Remove collider and rigidbody
+        Destroy(GetComponent<Collider2D>());
+        Destroy(GetComponent<Rigidbody2D>());
+
+        // Gradually scale the object up to 100x its size
+        GetComponent<SpriteRenderer>().sortingOrder = 50;
+        StartCoroutine(ScaleUp());
+
+        // Add negative score to game manager
+        gameManager.GetComponent<GameEventHandler>().AddScore(-50);
+    }
+
+    private IEnumerator ScaleUp()
+    {
+        float scaleIncrement = 0.3f; // The amount by which to increase the scale on each frame
+        Vector3 originalScale = transform.localScale; // The object's original scale
+        Vector3 targetScale = originalScale * 100f; // The scale we want to reach
+
+        while (transform.localScale.x < targetScale.x)
+        {
+            // Increase the scale by scaleIncrement
+            transform.localScale += new Vector3(scaleIncrement, scaleIncrement, 0f);
+
+            // Wait for the next frame
+            yield return null;
+        }
+
+        // Destroy the object
+        Destroy(gameObject);
     }
 }

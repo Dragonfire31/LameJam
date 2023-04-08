@@ -11,13 +11,25 @@ public class MouthCollider : MonoBehaviour
         {
             Debug.LogWarning($"Enemy behavior not found on {other.gameObject.name}. Check if the script is attached.");
         }
-        else if (other.gameObject.layer == 7)
-        {
-            other.GetComponent<EnemyBehavior>().scoreEnemy();
-        }
         else
         {
-            Debug.LogWarning($"Object {other.gameObject.name} collided with the mouth, but its layer is not 7.");
+            SpriteRenderer spriteRenderer = other.gameObject.GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null && spriteRenderer.sprite == enemyBehavior.gloopSprite)
+            {
+                // Gloop enemy behavior
+                Debug.Log($"Gloop enemy {other.gameObject.name} collided with the mouth.");
+                other.GetComponent<EnemyBehavior>().getGlooped();
+            }
+            else if (other.gameObject.layer == 7)
+            {
+                // Normal enemy behavior
+                other.GetComponent<EnemyBehavior>().scoreEnemy();
+            }
+            else
+            {
+                Debug.LogWarning($"Object {other.gameObject.name} collided with the mouth, but its layer is not 7.");
+            }
         }
     }
+
 }
