@@ -63,3 +63,6 @@ crashlytics-build.properties
 # User settings
 [Aa]ssets/EditorUserSettings.asset
 [Aa]ssets/EditorUserSettings/Layout/*
+LameJam/UserSettings/Layouts/default-2021.dwlt
+*.dwlt
+LameJam/UserSettings/Layouts/default-2021.dwlt
