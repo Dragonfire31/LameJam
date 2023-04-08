@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f40512f63e96334bacd15ae719a7175, type: 3}
   m_Name: CowEnemy
   m_EditorClassIdentifier: 
-  enemyName: 
+  enemyName: Cow Enemy
   pointValues: 050000000a00000005000000
   timeValues: 00000000050000000a000000
   sprites:
@@ -22,3 +22,4 @@ MonoBehaviour:
   gravityScale: 1
   mass: 5
   noReturnBounderies: 0
+  enemyGameObject: {fileID: 5097377085773061366, guid: a4ca2461a4a3a7e468d7338dcc485c0c, type: 3}
