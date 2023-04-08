@@ -5,9 +5,8 @@ public class RotateClockHands : MonoBehaviour
     [SerializeField] private bool isHourHand;
     [SerializeField] private GameObject otherHand;
     [SerializeField] private LayerMask collisionMask;
+    [SerializeField] private float maxSpeed = 50f;
 
-    private bool isDragging;
-    private Vector3 startMousePosition;
     private Quaternion startRotation;
     private Quaternion otherHandStartRotation;
     private float totalRotation;
@@ -15,33 +14,28 @@ public class RotateClockHands : MonoBehaviour
 
     private void Update()
     {
-        if (isDragging)
+        if (!isPaused)
         {
-            Vector3 currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            currentMousePosition.z = 0;
+            float rotationInput = 0;
 
-            Vector3 clockCenter = transform.position;
-            Vector3 startMouseDirection = (startMousePosition - clockCenter).normalized;
-            Vector3 currentMouseDirection = (currentMousePosition - clockCenter).normalized;
-
-            Quaternion startQuaternion = Quaternion.LookRotation(Vector3.forward, startMouseDirection);
-            Quaternion currentQuaternion = Quaternion.LookRotation(Vector3.forward, currentMouseDirection);
-            Quaternion rotationDelta = currentQuaternion * Quaternion.Inverse(startQuaternion);
-
-            float angleDifference = rotationDelta.eulerAngles.z;
-            if (angleDifference > 180f)
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
-                angleDifference -= 360f;
+                rotationInput = -1;
             }
-            totalRotation += angleDifference;
-
-            if (!CheckForCollision(angleDifference))
+            else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.RightArrow))
             {
-                transform.rotation = rotationDelta * startRotation;
+                rotationInput = 1;
+            }
+
+            if (rotationInput != 0)
+            {
+                float angleDifference = maxSpeed * Time.deltaTime * rotationInput;
+                totalRotation += angleDifference;
+
+                transform.rotation = Quaternion.Euler(0, 0, angleDifference) * transform.rotation;
                 UpdateOtherHandRotation(totalRotation);
             }
 
-            startMousePosition = currentMousePosition;
             startRotation = transform.rotation;
         }
     }
@@ -58,37 +52,6 @@ public class RotateClockHands : MonoBehaviour
             // This is the minute hand, so the other hand is the hour hand
             otherHand.transform.rotation = Quaternion.Euler(0, 0, totalRotation / 12) * otherHandStartRotation;
         }
-    }
-
-    private void OnMouseDown()
-    {
-        if (!isPaused)
-        {
-            isDragging = true;
-            startMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            startMousePosition.z = 0;
-            startRotation = transform.rotation;
-            otherHandStartRotation = otherHand.transform.rotation;
-            totalRotation = 0;
-        }
-    }
-
-    private void OnMouseUp()
-    {
-        isDragging = false;
-    }
-
-        private bool CheckForCollision(float angleDifference)
-    {
-        Vector3 startPoint = transform.position;
-        Vector3 endPoint = Quaternion.Euler(0, 0, angleDifference) * startPoint;
-
-        RaycastHit2D hit = Physics2D.Linecast(startPoint, endPoint, collisionMask);
-        if (hit.collider != null)
-        {
-            return true;
-        }
-        return false;
     }
 
     public void Pause()

@@ -666,6 +666,7 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 0
+  maxSpeed: 50
 --- !u!61 &404690375
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1646,6 +1647,7 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 0
+  maxSpeed: 50
 --- !u!114 &1510043822
 MonoBehaviour:
   m_ObjectHideFlags: 0
