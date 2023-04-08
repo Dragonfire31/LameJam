@@ -20,6 +20,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: beffa2bece93f2d47bbf607134d6262f, type: 3}
   - {fileID: 21300000, guid: 4c2ab128f7fa37c4e924171c0c6022b8, type: 3}
   gravityScale: 1
-  mass: 5
+  mass: 8
   noReturnBounderies: 0
   enemyGameObject: {fileID: 5097377085773061366, guid: a4ca2461a4a3a7e468d7338dcc485c0c, type: 3}
