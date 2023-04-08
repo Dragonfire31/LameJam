@@ -33,7 +33,6 @@ ExportedObj/
 *.sln
 *.suo
 *.tmp
-*.user
 *.userprefs
 *.pidb
 *.booproj
@@ -60,3 +59,6 @@ crashlytics-build.properties
 
 # TextMesh Pro asset files
 [Aa]ssets/TextMeshPro*
+
+# User settings
+[Aa]ssets/EditorUserSettings.asset
