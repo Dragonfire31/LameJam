@@ -20,10 +20,12 @@ public class EnemyBehavior : MonoBehaviour
     private int currentValue;
     private bool valuesSet = false;
     private GameObject gameManager;
+    private float ageChangeSpeed;
 
     // Start is called before the first frame update
     void Start()
     {
+        this.gameObject.AddComponent<Rigidbody2D>();
        gameManager = GameObject.Find("GameManager");
        if(gameManager == null)
        {
@@ -39,10 +41,20 @@ public class EnemyBehavior : MonoBehaviour
             Destroy(this.gameObject);
         }
 
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        {
+            age -= Time.deltaTime * ageChangeSpeed;
+        }
 
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
+            age += Time.deltaTime * ageChangeSpeed;
+        }
+
+        UpdateCurrentStage();
     }
 
-    public void SetValues(string enemyName, int[] pointValues, int[] timeValues, Sprite[] sprites, float gravityScale, float mass, int noReturnBounderies, float age, int currentValue)
+    public void SetValues(string enemyName, int[] pointValues, int[] timeValues, Sprite[] sprites, float gravityScale, float mass, int noReturnBounderies, float age, int currentValue, float ageChangeSpeed)
     {
         this.enemyName = enemyName;
         this.pointValues = pointValues;
@@ -53,6 +65,7 @@ public class EnemyBehavior : MonoBehaviour
         this.noReturnBounderies = noReturnBounderies;
         this.age = age;
         this.currentValue = currentValue;
+        this.ageChangeSpeed = ageChangeSpeed;
         valuesSet = true;
         Debug.Log("Current Value: " + currentValue);
         }
@@ -106,5 +119,37 @@ public class EnemyBehavior : MonoBehaviour
         }
 
         Destroy(this.gameObject);
+    }
+
+    private void UpdateCurrentStage()
+    {
+        if (valuesSet)
+        {
+            for (int i = 0; i < timeValues.Length; i++)
+            {
+                if (age >= timeValues[i] && age < (i + 1 < timeValues.Length ? timeValues[i + 1] : float.MaxValue))
+                {
+                    if (currentStage != i)
+                    {
+                        currentStage = i;
+                        UpdatePointsAndSprite();
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    private void UpdatePointsAndSprite()
+    {
+        currentValue = pointValues[currentStage];
+        GetComponent<SpriteRenderer>().sprite = sprites[currentStage];
+        UpdatePolygonCollider();
+    }
+
+    private void UpdatePolygonCollider()
+    {
+        DestroyImmediate(GetComponent<PolygonCollider2D>());
+        this.gameObject.AddComponent<PolygonCollider2D>();
     }
 }

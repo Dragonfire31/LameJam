@@ -17,6 +17,7 @@ public class CreateNewEnemy : ScriptableObject
     GameObject enemy; // enemy object
     private int currentStage; //current stage of the enemy
     private int startingValue;
+    [SerializeField] private float ageChangeSpeed = 1.0f;
 
     public void SpawnEnemy(Vector2 position)
     {
@@ -46,10 +47,11 @@ public class CreateNewEnemy : ScriptableObject
 
         // Instantiate the enemy object
         GameObject instantiatedEnemy = Instantiate(enemy);
+        instantiatedEnemy.AddComponent<PolygonCollider2D>();
 
         Debug.Log("Value: " + startingValue);
         // Call SetValues on the instantiated enemy object
-        instantiatedEnemy.GetComponent<EnemyBehavior>().SetValues(enemyName, pointValues, timeValues, sprites, gravityScale, mass, noReturnBounderies, age, startingValue);
+        instantiatedEnemy.GetComponent<EnemyBehavior>().SetValues(enemyName, pointValues, timeValues, sprites, gravityScale, mass, noReturnBounderies, age, startingValue, ageChangeSpeed);
 
         // Set the layer mask to layer 7
         instantiatedEnemy.layer = 7;
