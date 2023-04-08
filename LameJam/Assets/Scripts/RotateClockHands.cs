@@ -11,6 +11,7 @@ public class RotateClockHands : MonoBehaviour
     private Quaternion startRotation;
     private Quaternion otherHandStartRotation;
     private float totalRotation;
+    private bool isPaused;
 
     private void Update()
     {
@@ -61,12 +62,15 @@ public class RotateClockHands : MonoBehaviour
 
     private void OnMouseDown()
     {
-        isDragging = true;
-        startMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        startMousePosition.z = 0;
-        startRotation = transform.rotation;
-        otherHandStartRotation = otherHand.transform.rotation;
-        totalRotation = 0;
+        if (!isPaused)
+        {
+            isDragging = true;
+            startMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            startMousePosition.z = 0;
+            startRotation = transform.rotation;
+            otherHandStartRotation = otherHand.transform.rotation;
+            totalRotation = 0;
+        }
     }
 
     private void OnMouseUp()
@@ -85,5 +89,17 @@ public class RotateClockHands : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void Pause()
+    {
+        if (!isPaused)
+        {
+            isPaused = true;
+        }
+        else
+        {
+            isPaused = false;
+        }
     }
 }

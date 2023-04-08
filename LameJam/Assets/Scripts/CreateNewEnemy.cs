@@ -21,7 +21,7 @@ public class CreateNewEnemy : ScriptableObject
     public void SpawnEnemy(Vector2 position)
     {
         // Choose a random stage
-        int stage = Random.Range(0, pointValues.Length-1);
+        int stage = Random.Range(0, pointValues.Length);
         currentStage = stage;
         
         //set our time to a starting value from random stage using timeValues

@@ -17,6 +17,9 @@ public class GameEventHandler : MonoBehaviour
     [SerializeField] private float minSpawnDelay = 2.0f;
     [SerializeField] private float maxSpawnDelay = 5.0f;
     [SerializeField] private float spawnRateIncreasePerSecond = 0.1f;
+    [SerializeField] private float spawnMinX = 0f; // Minimum value for x
+    [SerializeField] private float spawnMaxX = 5f;  // Maximum value for x
+    [SerializeField] private float SpawnY = 5f;     // Static value for y
 
     //Button Event Manager
     [SerializeField] public Button mainMenuBtn;
@@ -143,12 +146,9 @@ public class GameEventHandler : MonoBehaviour
            CreateNewEnemy enemyData = enemyDataList[UnityEngine.Random.Range(0, enemyDataList.Length)];
 
             // Spawn the enemy at a random position within the spawnZone
-            float minX = -5f; // Minimum value for x
-            float maxX = 5f;  // Maximum value for x
-            float y = 5f;     // Static value for y
             float z = 0f;     // Static value for z
 
-            Vector3 randomPosition = new Vector3(UnityEngine.Random.Range(minX, maxX), y, z);
+            Vector3 randomPosition = new Vector3(UnityEngine.Random.Range(spawnMinX, spawnMaxX), SpawnY, z);
             enemyData.SpawnEnemy(randomPosition);
         }
     }
