@@ -12,8 +12,9 @@ public class RotateClockHands : MonoBehaviour
     private Quaternion startRotation;
     private Quaternion otherHandStartRotation;
     private float totalRotation;
-    private bool isPaused;
-    private float currentSpeed = 0f;
+    public bool isPaused;
+    public bool isMainMenu;
+    public float currentSpeed = 0f;
 
     private void Start()
     {
@@ -26,6 +27,8 @@ public class RotateClockHands : MonoBehaviour
         if (!isPaused)
         {
             float rotationInput = 0;
+
+            if (isMainMenu) { rotationInput = -1; }//rotate clock hands in main menu
 
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
@@ -66,15 +69,13 @@ public class RotateClockHands : MonoBehaviour
         }
     }
 
-    public void Pause()
+    public void Pause(bool PauseGame)
     {
-        if (!isPaused)
-        {
-            isPaused = true;
-        }
-        else
-        {
-            isPaused = false;
-        }
+        isPaused = PauseGame;
+    }
+
+    public void MainMenu(bool SceneMainMenu)
+    {
+        isMainMenu = SceneMainMenu;
     }
 }

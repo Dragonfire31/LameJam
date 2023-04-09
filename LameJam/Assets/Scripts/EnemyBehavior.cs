@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyBehavior : MonoBehaviour
 {
     private int timeChange; // time tracker for object after spawning to figure out what stage/ index of the array it is in
-    private bool isBelowBoundary = false; //if below boundary, destroy enemy in puff of smoke
+    //private bool isBelowBoundary = false; //if below boundary, destroy enemy in puff of smoke
     private bool isAboveBoundary = false; //if above boundary, destroy enemy and spawn goop enemy
     private bool isOutsideBoundary = false; //if outside boundary, destroy enemy
     private int currentStage; //current stage of the enemy

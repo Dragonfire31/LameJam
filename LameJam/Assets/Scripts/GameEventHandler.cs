@@ -55,6 +55,8 @@ public class GameEventHandler : MonoBehaviour
         // EventManager setup
         mainMenuBtn.onClick.AddListener(OnMainMenuButtonClicked);
         ResumeBtn.onClick.AddListener(ResumeGame);
+        LeftHand.GetComponent<RotateClockHands>().MainMenu(false);
+        RightHand.GetComponent<RotateClockHands>().MainMenu(false);
         StartGame();
     }
 
@@ -99,8 +101,8 @@ public class GameEventHandler : MonoBehaviour
         Debug.Log("Game Paused");
         gameStarted = false;
         PausePanel.SetActive(true);
-        LeftHand.GetComponent<RotateClockHands>().Pause();
-        RightHand.GetComponent<RotateClockHands>().Pause();
+        LeftHand.GetComponent<RotateClockHands>().Pause(true);
+        RightHand.GetComponent<RotateClockHands>().Pause(true);
 
     }
 
@@ -109,8 +111,8 @@ public class GameEventHandler : MonoBehaviour
         Debug.Log("Game Resume");
         gameStarted = true;
         PausePanel.SetActive(false);
-        LeftHand.GetComponent<RotateClockHands>().Pause();
-        RightHand.GetComponent<RotateClockHands>().Pause();
+        LeftHand.GetComponent<RotateClockHands>().Pause(false);
+        RightHand.GetComponent<RotateClockHands>().Pause(false);
     }
     #endregion
 
@@ -119,6 +121,8 @@ public class GameEventHandler : MonoBehaviour
     private void OnMainMenuButtonClicked()
     {
         Debug.Log("Main Menu Button Clicked");
+        LeftHand.GetComponent<RotateClockHands>().Pause(false);
+        RightHand.GetComponent<RotateClockHands>().Pause(false);
         GameEnd();
         SceneManager.LoadScene("MainMenu");
     }

@@ -13,7 +13,8 @@ public class EventHandler : MonoBehaviour
     public Button settingsButton;
     public Button exitButton;
 
-    // Timer fields
+    // HandsField
+    [SerializeField] private GameObject LeftHand;
 
 
     private void Start() // Start is called before the first frame update
@@ -26,11 +27,13 @@ public class EventHandler : MonoBehaviour
 
     private void Update()
     {
-
+        LeftHand.GetComponent<RotateClockHands>().MainMenu(true);
     }
+
     #region ButtonClicks
     private void OnStartButtonClicked()
     {
+        LeftHand.GetComponent<RotateClockHands>().MainMenu(false);
         Debug.Log("Game Start Button Clicked");
         SceneManager.LoadScene("GameScene");
     }
