@@ -16,7 +16,6 @@ public class EventHandler : MonoBehaviour
     // HandsField
     [SerializeField] private GameObject LeftHand;
 
-
     private void Start() // Start is called before the first frame update
     {
         // EventManager setup
