@@ -1028,7 +1028,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00030632623}
+  m_AnchoredPosition: {x: 0, y: 252.82082}
   m_SizeDelta: {x: 0, y: 447}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &404690370
@@ -2863,7 +2863,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 595375873}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.33947998
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2996,8 +2996,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4a35089fe818f5c4c9551f4f4a701e8c, type: 2}
   - {fileID: 11400000, guid: 6ee5a347dd3d8b046b77f55b948748dd, type: 2}
   - {fileID: 11400000, guid: 16220cbcbcc064f40994cf52db57370d, type: 2}
-  minSpawnDelay: 2
-  maxSpawnDelay: 5
+  minSpawnDelay: 0.5
+  maxSpawnDelay: 1
   spawnRateIncreasePerSecond: 0.1
   spawnMinX: 0
   spawnMaxX: 5
