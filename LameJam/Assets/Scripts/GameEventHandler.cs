@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using System.IO;
 
 public class GameEventHandler : MonoBehaviour
 {
@@ -41,7 +42,7 @@ public class GameEventHandler : MonoBehaviour
 
     // Game state
     private bool gameStarted = false;
-    private int totalScore = 0;
+    private int totalScore;
 
     //HistoryScreen
     public GameObject imagePrefab; // The prefab for the image element in the scroll view
@@ -51,8 +52,12 @@ public class GameEventHandler : MonoBehaviour
 
     public Vector3 spawnPosition = new Vector3(0, -4000, 0);
 
+    private string filePath;
+
     private void Start() // Start is called before the first frame update
     {
+        filePath = Application.persistentDataPath + "/score.txt";
+        LoadScore();
         // EventManager setup
         mainMenuBtn.onClick.AddListener(OnMainMenuButtonClicked);
         ResumeBtn.onClick.AddListener(ResumeGame);
@@ -149,6 +154,7 @@ public class GameEventHandler : MonoBehaviour
 
     private void GameEnd()
     {
+        SaveScore();
         Debug.Log("Game Ended");
         gameStarted = false;
     }
@@ -204,6 +210,25 @@ public class GameEventHandler : MonoBehaviour
         // Add the sprite image to the list of killed sprites
         killedSprites.Add(newImage.GetComponent<Image>());
 
+    }
+
+        void SaveScore()
+    {
+        StreamWriter writer = new StreamWriter(filePath);
+        writer.WriteLine(totalScore.ToString()); // write the total score as a string to the file
+        writer.Close();
+    }
+
+        void LoadScore()
+    {
+        if (File.Exists(filePath))
+        {
+            StreamReader reader = new StreamReader(filePath);
+            string scoreString = reader.ReadLine(); // read the score as a string from the file
+            reader.Close();
+
+            int.TryParse(scoreString, out totalScore); // convert the string to an int and store it as the total score
+        }
     }
 
 
