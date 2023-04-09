@@ -18,16 +18,19 @@ public class EnemyBehavior : MonoBehaviour
     private GameObject gameManager;
     private float ageChangeSpeed;
     public Sprite gloopSprite; // sprite for gloop enemy
+    [SerializeField] AudioClip[] audioClips;
+    private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
-    {
+    {      
         this.gameObject.AddComponent<Rigidbody2D>();
        gameManager = GameObject.Find("GameManager");
        if(gameManager == null)
        {
            Debug.LogWarning("Game Manager not found");
        }
+       audioSource = gameManager.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -68,6 +71,8 @@ public class EnemyBehavior : MonoBehaviour
 
     public void scoreEnemy()
     {
+        audioSource.clip = audioClips[Random.Range(0, audioClips.Length - 1)];
+        audioSource.Play();
         //Check if gameOject exists
         if (this.gameObject != null)
         {
@@ -128,6 +133,8 @@ public class EnemyBehavior : MonoBehaviour
     public void getGlooped()
     {
 
+        audioSource.clip = audioClips[audioClips.Length-1];
+        audioSource.Play();
         gameManager.GetComponent<GameEventHandler>().OnEnemyScore(sprites[currentStage]);
 
         // Remove collider and rigidbody
