@@ -13,12 +13,17 @@ public class GameEventHandler : MonoBehaviour
     [SerializeField] private GameObject PausePanel;
     [SerializeField] private GameObject LeftHand;
     [SerializeField] private GameObject RightHand;
-    [SerializeField] private CreateNewEnemy[] enemyDataList;
-    [SerializeField] private float minSpawnDelay = 2.0f;
-    [SerializeField] private float maxSpawnDelay = 5.0f;
-    [SerializeField] private float spawnRateIncreasePerSecond = 0.1f;
-    [SerializeField] private float spawnMinX = 0f; // Minimum value for x
-    [SerializeField] private float spawnMaxX = 5f;  // Maximum value for x
+
+    //Spawning
+    [SerializeField] private CreateNewEnemy[] enemyDataList; // The list of enemy data to spawn from
+    [SerializeField] public float spawnInterval = 2.0f; // The base spawn interval in seconds.
+    [SerializeField] public float maxSpawnRate = 0.5f;  // The maximum spawn rate in probability per second.
+    [SerializeField] public float spawnRateIncreaseInterval = 10.0f; // The interval at which to increase the spawn rate.
+    [SerializeField] public float spawnRateIncreaseAmount = 0.05f;// The amount by which to increase the spawn rate at each interval.
+    [SerializeField] private float spawnRateTimer = 0.0f;    // The timer for tracking when to increase the spawn rate.
+    [SerializeField] private float spawnRate = 0.0f;    // The current spawn rate in probability per second.
+    [SerializeField] private float[] spawnMinX; // Minimum value for x
+    [SerializeField] private float[] spawnMaxX;  // Maximum value for x
     [SerializeField] private float SpawnY = 5f;     // Static value for y
 
     //Button Event Manager
@@ -82,13 +87,23 @@ public class GameEventHandler : MonoBehaviour
 
             UpdateTimerText();
 
-            if (timeLeft < timeRemaining)
+            // Increment the spawn rate timer by the time that has passed since the last frame.
+            spawnRateTimer += Time.deltaTime;
+
+            // Increase the spawn rate if enough time has passed since the last increase.
+            if (spawnRateTimer >= spawnRateIncreaseInterval)
             {
-                spawnDelay = Mathf.Clamp(spawnDelay - spawnRateIncreasePerSecond * Time.deltaTime, minSpawnDelay, maxSpawnDelay);
-                if (UnityEngine.Random.value < Time.deltaTime / spawnDelay)
-                {
-                    SpawnEnemy();
-                }
+                // Subtract the spawn rate increase interval from the timer.
+                spawnRateTimer -= spawnRateIncreaseInterval;
+
+                // Increase the spawn rate by the spawn rate increase amount, up to the maximum spawn rate.
+                spawnRate = Mathf.Min(spawnRate + spawnRateIncreaseAmount, maxSpawnRate);
+            }
+
+            // Spawn a monster randomly based on the current spawn rate and the time that has passed since the last frame.
+            if (UnityEngine.Random.value < spawnRate * Time.deltaTime)
+            {
+                SpawnEnemy();
             }
         }
         else { Time.timeScale = 0f; }
@@ -175,8 +190,22 @@ public class GameEventHandler : MonoBehaviour
 
             // Spawn the enemy at a random position within the spawnZone
             float z = 0f;     // Static value for z
+            float minX = 0;
+            float maxX = 0;
 
-            Vector3 randomPosition = new Vector3(UnityEngine.Random.Range(spawnMinX, spawnMaxX), SpawnY, z);
+            bool randbool = UnityEngine.Random.Range(0,2) == 0;
+            if (randbool)
+            {
+                minX = spawnMinX[0];
+                maxX = spawnMinX[1];
+            }
+            else
+            {
+                minX = spawnMaxX[0];
+                maxX = spawnMaxX[1];
+            }
+
+            Vector3 randomPosition = new Vector3(UnityEngine.Random.Range(minX, maxX), SpawnY, z);
             enemyData.SpawnEnemy(randomPosition);
         }
     }

@@ -2369,12 +2369,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4a35089fe818f5c4c9551f4f4a701e8c, type: 2}
   - {fileID: 11400000, guid: 6ee5a347dd3d8b046b77f55b948748dd, type: 2}
   - {fileID: 11400000, guid: 16220cbcbcc064f40994cf52db57370d, type: 2}
-  minSpawnDelay: 2
-  maxSpawnDelay: 5
-  spawnRateIncreasePerSecond: 0.1
-  spawnMinX: 0
-  spawnMaxX: 5
-  SpawnY: 5
+  spawnInterval: 1
+  maxSpawnRate: 0.75
+  spawnRateIncreaseInterval: 5
+  spawnRateIncreaseAmount: 0.02
+  spawnRateTimer: 0
+  spawnRate: 0.1
+  spawnMinX:
+  - 0.5
+  - 2
+  spawnMaxX:
+  - 4.5
+  - 6.5
+  SpawnY: 6
   mainMenuBtn: {fileID: 788840353}
   ResumeBtn: {fileID: 2006427059}
   startTime: 240
