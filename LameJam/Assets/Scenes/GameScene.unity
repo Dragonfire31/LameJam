@@ -861,7 +861,7 @@ Transform:
   m_GameObject: {fileID: 404690370}
   m_LocalRotation: {x: -0, y: -0, z: -0.018463392, w: 0.9998296}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.3, z: 1}
+  m_LocalScale: {x: 1.35, y: 1.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1758265834}
@@ -939,6 +939,9 @@ MonoBehaviour:
   maxSpeed: 70
   minSpeed: 15
   acceleration: 5
+  isPaused: 0
+  isMainMenu: 0
+  currentSpeed: 0
 --- !u!61 &404690375
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -948,7 +951,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 404690370}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: e8681752cb9f40a4f9a967913fc26841, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -2114,7 +2117,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1510043816}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: e8681752cb9f40a4f9a967913fc26841, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -2148,9 +2151,12 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 0
-  maxSpeed: 150
+  maxSpeed: 80
   minSpeed: 30
   acceleration: 5
+  isPaused: 0
+  isMainMenu: 0
+  currentSpeed: 0
 --- !u!114 &1510043822
 MonoBehaviour:
   m_ObjectHideFlags: 0

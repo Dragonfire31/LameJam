@@ -22,7 +22,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 1c64a7a9ec9f9794da0bc527e6415bc3, type: 3}
   - {fileID: 21300000, guid: 3941f02a61c60fe4bb0bfe7b666f5483, type: 3}
   gloopSprite: {fileID: 21300000, guid: 3f08f732d7062654e85adedab565021f, type: 3}
-  gravityScale: 1
+  gravityScale: 0.2
   mass: 5
   noReturnBounderies: 50
   enemyGameObject: {fileID: 5097377085773061366, guid: a4ca2461a4a3a7e468d7338dcc485c0c, type: 3}
