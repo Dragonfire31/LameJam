@@ -2370,9 +2370,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6ee5a347dd3d8b046b77f55b948748dd, type: 2}
   - {fileID: 11400000, guid: 16220cbcbcc064f40994cf52db57370d, type: 2}
   spawnInterval: 1
-  maxSpawnRate: 0.85
+  maxSpawnRate: 0.95
   spawnRateIncreaseInterval: 5
-  spawnRateIncreaseAmount: 0.024
+  spawnRateIncreaseAmount: 0.02
   spawnRateTimer: 0
   spawnRate: 0.1
   minSpawnDelay: 10
