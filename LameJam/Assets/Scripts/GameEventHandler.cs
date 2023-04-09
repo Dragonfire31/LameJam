@@ -22,6 +22,8 @@ public class GameEventHandler : MonoBehaviour
     [SerializeField] public float spawnRateIncreaseAmount = 0.05f;// The amount by which to increase the spawn rate at each interval.
     [SerializeField] private float spawnRateTimer = 0.0f;    // The timer for tracking when to increase the spawn rate.
     [SerializeField] private float spawnRate = 0.0f;    // The current spawn rate in probability per second.
+    [SerializeField] public float minSpawnDelay = 1.0f;// The minimum time to wait before spawning a new monster, in seconds.
+    [SerializeField] private float spawnDelayTimer = 0.0f;// The timer for tracking the time since the last monster was spawned.
     [SerializeField] private float[] spawnMinX; // Minimum value for x
     [SerializeField] private float[] spawnMaxX;  // Maximum value for x
     [SerializeField] private float SpawnY = 5f;     // Static value for y
@@ -100,10 +102,20 @@ public class GameEventHandler : MonoBehaviour
                 spawnRate = Mathf.Min(spawnRate + spawnRateIncreaseAmount, maxSpawnRate);
             }
 
-            // Spawn a monster randomly based on the current spawn rate and the time that has passed since the last frame.
+            // Increment the spawn delay timer by the time that has passed since the last frame.
+            spawnDelayTimer += Time.deltaTime;
+
+            // Spawn a monster randomly based on the current spawn rate and the time that has passed since the last frame,
+            // but always ensure that there is at least one monster spawned at all times.
             if (UnityEngine.Random.value < spawnRate * Time.deltaTime)
             {
                 SpawnEnemy();
+                spawnDelayTimer = 0.0f; // Reset the spawn delay timer.
+            }
+            if (spawnDelayTimer >= minSpawnDelay) // Spawn a monster if enough time has passed since the last monster was spawned.
+            {
+                SpawnEnemy();
+                spawnDelayTimer = 0.0f; // Reset the spawn delay timer.
             }
         }
         else { Time.timeScale = 0f; }
@@ -165,6 +177,7 @@ public class GameEventHandler : MonoBehaviour
         timeRemaining = startTime;
         UpdateTimerText();
         gameStarted = true;
+        SpawnEnemy();
     }
 
     private void GameEnd()
