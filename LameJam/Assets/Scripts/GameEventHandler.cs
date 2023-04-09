@@ -30,6 +30,10 @@ public class GameEventHandler : MonoBehaviour
     public float startTime = 300f; // 5 minutes in seconds
     [SerializeField] private TextMeshProUGUI timerText;
 
+    // Score fields
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI highScoreText;
+
     private float timeRemaining;
 
     // Enemy spawn fields
@@ -40,6 +44,11 @@ public class GameEventHandler : MonoBehaviour
     private bool gameStarted = false;
     private int totalScore = 0;
 
+    //HistoryScreen
+    public GameObject imagePrefab; // The prefab for the image element in the scroll view
+    public Transform contentTransform; // The transform of the content panel in the scroll view
+
+    public List<Sprite> killedSprites = new List<Sprite>(); 
 
     private void Start() // Start is called before the first frame update
     {
@@ -142,6 +151,7 @@ public class GameEventHandler : MonoBehaviour
     public void AddScore(int score)
     {
         totalScore += score;
+        scoreText.text = totalScore.ToString();
         Debug.Log("Score: " + totalScore);
     }
 
@@ -160,5 +170,20 @@ public class GameEventHandler : MonoBehaviour
         }
     }
 
+
+    public void OnEnemyScore(Sprite sprites)
+    {
+        // Add the sprite image to the list of killed sprites
+        killedSprites.Add(sprites);
+
+        // Instantiate a new image element from the prefab
+        GameObject newImage = Instantiate(imagePrefab, contentTransform);
+
+        // Set the sprite of the new image element
+        newImage.GetComponent<Image>().sprite = sprites;
+
+        newImage.GetComponent<RectTransform>().position = newImage.transform.position + new Vector3(0, -50, 0);
+
+    }
 
 }

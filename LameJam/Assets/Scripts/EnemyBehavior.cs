@@ -77,6 +77,7 @@ public class EnemyBehavior : MonoBehaviour
         {
             Debug.Log("Score Value: " + currentValue);
             gameManager.GetComponent<GameEventHandler>().AddScore(currentValue);
+            gameManager.GetComponent<GameEventHandler>().OnEnemyScore(sprites[currentStage]);
             Destroy(this.gameObject);
         }
         else
