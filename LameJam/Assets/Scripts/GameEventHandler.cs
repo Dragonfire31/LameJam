@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using System;
-using JetBrains.Annotations;
 
 public class GameEventHandler : MonoBehaviour
 {
@@ -46,9 +45,11 @@ public class GameEventHandler : MonoBehaviour
 
     //HistoryScreen
     public GameObject imagePrefab; // The prefab for the image element in the scroll view
-    public Transform contentTransform; // The transform of the content panel in the scroll view
+    public GameObject HistoryPanel; // The transform of the content panel in the scroll view
 
-    public List<Sprite> killedSprites = new List<Sprite>(); 
+    public List<Image> killedSprites = new List<Image>(); 
+
+    public Vector3 spawnPosition = new Vector3(0, -4000, 0);
 
     private void Start() // Start is called before the first frame update
     {
@@ -174,20 +175,36 @@ public class GameEventHandler : MonoBehaviour
         }
     }
 
-
-    public void OnEnemyScore(Sprite sprites)
+    public void OnEnemyScore(Sprite sprite)
     {
-        // Add the sprite image to the list of killed sprites
-        killedSprites.Add(sprites);
+        const int maxImagesPerRow = 10;
+        const int rowSpacing = 50;
+        const int colSpacing = -50;
 
+        // Check if we need to start a new row
+        bool startNewRow = killedSprites.Count % maxImagesPerRow == 0 && killedSprites.Count > 0;
+
+        // If we need to start a new row, adjust y position
+        if (startNewRow)
+        {
+            spawnPosition.y += colSpacing;
+            spawnPosition.x -= rowSpacing * (maxImagesPerRow - 1);
+            startNewRow = false;
+        }else
+        {
+            spawnPosition.x += rowSpacing;
+        }
         // Instantiate a new image element from the prefab
-        GameObject newImage = Instantiate(imagePrefab, contentTransform);
+        GameObject newImage = Instantiate(imagePrefab, Vector3.zero, Quaternion.identity, HistoryPanel.transform);
+        newImage.GetComponent<RectTransform>().localPosition = spawnPosition;
 
         // Set the sprite of the new image element
-        newImage.GetComponent<Image>().sprite = sprites;
+        newImage.GetComponent<Image>().sprite = sprite;
 
-        newImage.GetComponent<RectTransform>().position = newImage.transform.position + new Vector3(0, -50, 0);
+        // Add the sprite image to the list of killed sprites
+        killedSprites.Add(newImage.GetComponent<Image>());
 
     }
+
 
 }

@@ -5,9 +5,6 @@ using UnityEngine;
 public class EnemyBehavior : MonoBehaviour
 {
     private int timeChange; // time tracker for object after spawning to figure out what stage/ index of the array it is in
-    //private bool isBelowBoundary = false; //if below boundary, destroy enemy in puff of smoke
-    private bool isAboveBoundary = false; //if above boundary, destroy enemy and spawn goop enemy
-    private bool isOutsideBoundary = false; //if outside boundary, destroy enemy
     private int currentStage; //current stage of the enemy
     private string enemyName; //Name of the enemy
     private int[] pointValues; // points for each array index
@@ -18,7 +15,6 @@ public class EnemyBehavior : MonoBehaviour
     private int noReturnBounderies; //time change to be added and subtracted from the top and bottom of the array, to low object will disapear from time, to large object turn into goop enemy
     private float age; // age of the enemy
     private int currentValue;
-    private bool valuesSet = false;
     private GameObject gameManager;
     private float ageChangeSpeed;
     public Sprite gloopSprite; // sprite for gloop enemy
@@ -131,6 +127,9 @@ public class EnemyBehavior : MonoBehaviour
 
     public void getGlooped()
     {
+
+        gameManager.GetComponent<GameEventHandler>().OnEnemyScore(sprites[currentStage]);
+
         // Remove collider and rigidbody
         Destroy(GetComponent<Collider2D>());
         Destroy(GetComponent<Rigidbody2D>());
