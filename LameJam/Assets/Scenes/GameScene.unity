@@ -3100,7 +3100,7 @@ MonoBehaviour:
   mainMenuBtn: {fileID: 788840353}
   ResumeBtn: {fileID: 2006427059}
   gameOverUI: {fileID: 868647628}
-  startTime: 10
+  startTime: 180
   timerText: {fileID: 70466625}
   scoreText: {fileID: 2033792463}
   highScoreText: {fileID: 2108398876}

@@ -10,7 +10,6 @@ public class EventHandler : MonoBehaviour
 {
     // EventManager fields
     public Button startButton;
-    public Button settingsButton;
     public Button exitButton;
 
     // HandsField
@@ -20,7 +19,6 @@ public class EventHandler : MonoBehaviour
     {
         // EventManager setup
         startButton.onClick.AddListener(OnStartButtonClicked);
-        settingsButton.onClick.AddListener(OnSettingsButtonClicked);
         exitButton.onClick.AddListener(OnExitButtonClicked);
     }
 
