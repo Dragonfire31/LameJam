@@ -254,22 +254,31 @@ public class GameEventHandler : MonoBehaviour
 
     }
 
-        void SaveScore()
+       private void SaveScore()
     {
-        StreamWriter writer = new StreamWriter(filePath);
-        writer.WriteLine(totalScore.ToString()); // write the total score as a string to the file
-        writer.Close();
+        int highscore = int.Parse(highScoreText.text);
+        if (totalScore > highscore)
+        {
+            StreamWriter writer = new StreamWriter(filePath);
+            writer.WriteLine(totalScore.ToString()); // write the total score as a string to the file
+            writer.Close();
+            highScoreText.text = totalScore.ToString();
+            Debug.Log("Game Saved To: " + filePath);
+        }
     }
 
-        void LoadScore()
+      private  void LoadScore()
     {
         if (File.Exists(filePath))
         {
             StreamReader reader = new StreamReader(filePath);
+            //int scoreValue = int.Parse(reader.ReadLine());
             string scoreString = reader.ReadLine(); // read the score as a string from the file
             reader.Close();
 
-            int.TryParse(scoreString, out totalScore); // convert the string to an int and store it as the total score
+            //int.TryParse(scoreString, out totalScore); // convert the string to an int and store it as the total score
+            highScoreText.text= scoreString;
+            Debug.Log("Game Loaded From: " + filePath);
         }
     }
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PhoneEnemy
   m_EditorClassIdentifier: 
   enemyName: Phone
-  pointValues: 00000000050000000a0000000f00000014000000
+  pointValues: 00000000050000000f000000190000001e000000
   timeValues: 00000000050000000a0000000f00000014000000
   sprites:
   - {fileID: 21300000, guid: 95a99aa078ff6a8458c88f8afb78ba61, type: 3}

@@ -2372,10 +2372,10 @@ MonoBehaviour:
   spawnInterval: 1
   maxSpawnRate: 0.95
   spawnRateIncreaseInterval: 5
-  spawnRateIncreaseAmount: 0.02
+  spawnRateIncreaseAmount: 0.0285
   spawnRateTimer: 0
   spawnRate: 0.1
-  minSpawnDelay: 10
+  minSpawnDelay: 5
   spawnDelayTimer: 0
   spawnMinX:
   - 0.5
@@ -2386,7 +2386,7 @@ MonoBehaviour:
   SpawnY: 6
   mainMenuBtn: {fileID: 788840353}
   ResumeBtn: {fileID: 2006427059}
-  startTime: 240
+  startTime: 180
   timerText: {fileID: 70466625}
   scoreText: {fileID: 2033792463}
   highScoreText: {fileID: 2108398876}
