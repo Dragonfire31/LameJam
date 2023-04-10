@@ -31,7 +31,7 @@ public class GameEventHandler : MonoBehaviour
     //Button Event Manager
     [SerializeField] public Button mainMenuBtn;
     [SerializeField] public Button ResumeBtn;
-
+    [SerializeField] private GameObject gameOverUI;
 
     // Timer fields
     public float startTime = 300f; // 5 minutes in seconds
@@ -185,6 +185,7 @@ public class GameEventHandler : MonoBehaviour
         SaveScore();
         Debug.Log("Game Ended");
         gameStarted = false;
+        gameOverUI.SetActive(true);
     }
 
     public void AddScore(int score)
@@ -273,5 +274,17 @@ public class GameEventHandler : MonoBehaviour
         }
     }
 
+    //Restart the game
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("GameScene");
+    }
+
+    //Retrun to main menu
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+    
 
 }
